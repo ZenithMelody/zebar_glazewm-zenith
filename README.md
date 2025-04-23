@@ -6,7 +6,7 @@
 - [GlazeWM Config File](./config.yaml)
 
 # Zebar setup:
-- Zebar](https://github.com/glzr-io/zebar)
+- [Zebar](https://github.com/glzr-io/zebar)
 1. Copy [catppuccined](./catppuccined) widget to Zebar directory
 
 ```

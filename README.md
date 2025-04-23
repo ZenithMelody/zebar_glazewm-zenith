@@ -11,7 +11,7 @@
 
 To configure Zebar:
 
-1. Copy [vanilla-clear](./vanilla-clear) widget to Zebar directory
+1. Copy [vanilla-clear](./catppuccined) widget to Zebar directory
 
 ```
 cp ./vanilla-clear/ ~/.glzr/zebar/

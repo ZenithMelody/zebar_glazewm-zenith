@@ -1,17 +1,13 @@
 # My configs for Zebar and GlazeWM cause I like the Catppuccin colour scheme :D
 
-# Window Manager Setup
+# GLazeWM Setup
 
 - [GlazeWM](https://github.com/glzr-io/glazewm)
 - [GlazeWM Config File](./config.yaml)
 
-# TopBar Setup
-
-- [Zebar](https://github.com/glzr-io/zebar)
-
-To configure Zebar:
-
-1. Copy [vanilla-clear](./catppuccined) widget to Zebar directory
+# Zebar setup:
+- Zebar](https://github.com/glzr-io/zebar)
+1. Copy [catppuccined](./catppuccined) widget to Zebar directory
 
 ```
 .glzr/zebar/

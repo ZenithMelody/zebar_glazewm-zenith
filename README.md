@@ -17,5 +17,4 @@ To configure Zebar:
 cp ./vanilla-clear/ ~/.glzr/zebar/
 ```
 
-2. Than disable other widgets in Zebar system tray.
-
+2. Follwed by disabling the other widgets in Zebar system tray.

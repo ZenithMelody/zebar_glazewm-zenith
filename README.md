@@ -14,7 +14,7 @@ To configure Zebar:
 1. Copy [vanilla-clear](./catppuccined) widget to Zebar directory
 
 ```
-cp ./vanilla-clear/ ~/.glzr/zebar/
+.glzr/zebar/
 ```
 
 2. Follwed by disabling the other widgets in Zebar system tray.

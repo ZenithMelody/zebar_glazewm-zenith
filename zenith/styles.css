@@ -6,7 +6,6 @@
 
 i {
   color: rgb(203 166 247 / 95%);
-  margin-right: 7px;
 }
 
 body {
@@ -39,7 +38,7 @@ body,
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   height: 100%;
-  padding: 4px 1.5vw;
+  padding-left: 15px;
 }
 
 .left,
@@ -57,15 +56,12 @@ body,
   justify-self: end;
 }
 
-.logo,
-.binding-mode,
-.tiling-direction,
-.paused-button,
-.network,
-.memory,
-.cpu,
-.battery {
-  margin-right: 20px;
+.tiling-direction {
+  margin-right: 10px;
+}
+
+.logo {
+  margin-right: 15px;
 }
 
 .workspaces {
@@ -92,9 +88,7 @@ body,
   }
 }
 
-.binding-mode,
-.tiling-direction,
-.paused-button {
+.tiling-direction {
   background: rgb(203 166 247 / 15%);
   color: rgb(245 194 231 / 90%);
   border-radius: 2px;
@@ -108,17 +102,4 @@ body,
   margin-right: 4px;
 }
 
-.cpu .high-usage {
-  color: #f38ba8;
-}
 
-.battery {
-  position: relative;
-}
-
-.battery .charging-icon {
-  position: absolute;
-  font-size: 7px;
-  left: -8px;
-  top: 3px;
-}

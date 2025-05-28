@@ -6,6 +6,7 @@
 
 i {
   color: rgb(203 166 247 / 95%);
+  margin-right: 7px;
 }
 
 body {
@@ -31,6 +32,7 @@ body,
 #root {
   border-bottom: 1px solid rgb(255 255 255 / 5%);
   background: linear-gradient(rgb(30 30 46 /90%), rgb(24 24 37 / 85%));
+  border-radius: 17px;
 }
 
 .app {
@@ -38,7 +40,7 @@ body,
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   height: 100%;
-  padding-left: 15px;
+  padding: 4px 1.5vw;
 }
 
 .left,
@@ -56,11 +58,14 @@ body,
   justify-self: end;
 }
 
-.tiling-direction {
-  margin-right: 10px;
-}
-
-.logo {
+.logo,
+.binding-mode,
+.tiling-direction,
+.paused-button,
+.network,
+.memory,
+.cpu,
+.battery {
   margin-right: 15px;
 }
 
@@ -75,7 +80,7 @@ body,
   padding: 4px 8px;
   color: rgb(245 194 231 / 90%);
   border: none;
-  border-radius: 2px;
+  border-radius: 12px;
   cursor: pointer;
 
   &.displayed {
@@ -88,10 +93,12 @@ body,
   }
 }
 
-.tiling-direction {
+.binding-mode,
+.tiling-direction,
+.paused-button {
   background: rgb(203 166 247 / 15%);
   color: rgb(245 194 231 / 90%);
-  border-radius: 2px;
+  border-radius: 12px;
   line-height: 1;
   padding: 4px 8px;
   border: 0;
@@ -103,3 +110,13 @@ body,
 }
 
 
+.battery {
+  position: relative;
+}
+
+.battery .charging-icon {
+  position: absolute;
+  font-size: 7px;
+  left: -8px;
+  top: 3px;
+}

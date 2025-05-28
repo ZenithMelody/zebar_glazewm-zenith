@@ -29,27 +29,85 @@
         //network: { type: 'network' },
         glazewm: { type: 'glazewm' },
         //cpu: { type: 'cpu' },
-        //date: { type: 'date', formatting: 'EEE d MMM t' },
-        //battery: { type: 'battery' },
+        date: { type: 'date', formatting: 'EEE d MMM t' },
+        battery: { type: 'battery' },
         //memory: { type: 'memory' },
-        //weather: { type: 'weather' }
+        //weather: { type: 'weather' },
       });
-      createRoot(document.getElementById('root')).render(<App />); function App() { const [output, setOutput] = useState(providers.outputMap);
+
+      createRoot(document.getElementById('root')).render(<App />);
+
+      function App() {
+        const [output, setOutput] = useState(providers.outputMap);
 
         useEffect(() => {
           providers.onOutput(() => setOutput(providers.outputMap));
         }, []);
 
+        // Get icon to show for current network status.
+        function getNetworkIcon(networkOutput) {
+          switch (networkOutput.defaultInterface?.type) {
+            case 'ethernet':
+              return <i className="nf nf-md-ethernet_cable"></i>;
+            case 'wifi':
+              if (networkOutput.defaultGateway?.signalStrength >= 80) {
+                return <i className="nf nf-md-wifi_strength_4"></i>;
+              } else if (
+                networkOutput.defaultGateway?.signalStrength >= 65
+              ) {
+                return <i className="nf nf-md-wifi_strength_3"></i>;
+              } else if (
+                networkOutput.defaultGateway?.signalStrength >= 40
+              ) {
+                return <i className="nf nf-md-wifi_strength_2"></i>;
+              } else if (
+                networkOutput.defaultGateway?.signalStrength >= 25
+              ) {
+                return <i className="nf nf-md-wifi_strength_1"></i>;
+              } else {
+                return <i className="nf nf-md-wifi_strength_outline"></i>;
+              }
+            default:
+              return (
+                <i className="nf nf-md-wifi_strength_off_outline"></i>
+              );
+          }
+        }
+
+        // Get icon to show for how much of the battery is charged.
+        function getBatteryIcon(batteryOutput) {
+          if (batteryOutput.chargePercent > 90)
+            return <i className="nf nf-fa-battery_4"></i>;
+          if (batteryOutput.chargePercent > 70)
+            return <i className="nf nf-fa-battery_3"></i>;
+          if (batteryOutput.chargePercent > 40)
+            return <i className="nf nf-fa-battery_2"></i>;
+          if (batteryOutput.chargePercent > 20)
+            return <i className="nf nf-fa-battery_1"></i>;
+          return <i className="nf nf-fa-battery_0"></i>;
+        }
+
+        function getTimeTillEmpty(batteryOutput) {
+            if (!batteryOutput.timeTillEmpty) return "Unknown";
+
+            const totalSeconds = Math.floor(batteryOutput.timeTillEmpty / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+            if (hours > 0) {
+              return `${hours}h ${minutes}m`;
+            }
+            return `${minutes}m`;
+          }
+
+
+        // Get icon to show for current weather status.
         
 
         return (
           <div className="app">
             <div className="left">
               <i className="logo nf nf-fa-apple"></i>
-              
-            </div>
-
-            <div className="center">
               {output.glazewm && (
                 <div className="workspaces">
                   {output.glazewm.currentWorkspaces.map(workspace => (
@@ -69,9 +127,48 @@
               )}
             </div>
 
+            <div className="center">
+              <i>Welcome Ryan</i>
+            </div>
+
             <div className="right">
+              {output.battery && (
+                <div className="battery">
+                  {output.battery.isCharging && (
+                    <i className="nf nf-md-power_plug charging-icon"></i>
+                  )}
+                  {getBatteryIcon(output.battery)}
+                  {Math.round(output.battery.chargePercent)}%
+                  <span className="battery-time">
+                    {' — ' + getTimeTillEmpty(output.battery)}
+                  </span>
+                </div>
+              )}
+
               {output.glazewm && (
                 <>
+                  {output.glazewm.isPaused && (
+                    <button
+                      className="paused-button"
+                      onClick={() => glazewm.runCommand('wm-toggle-pause')}
+                    >
+                      PAUSED
+                    </button>
+                  )}
+                  {output.glazewm.bindingModes.map(bindingMode => (
+                    <button
+                      className="binding-mode"
+                      key={bindingMode.name}
+                      onClick={() =>
+                        output.glazewm.runCommand(
+                          `wm-disable-binding-mode --name ${bindingMode.name}`,
+                        )
+                      }
+                    >
+                      {bindingMode.displayName ?? bindingMode.name}
+                    </button>
+                  ))}
+
                   <button
                     className={`tiling-direction nf ${output.glazewm.tilingDirection === 'horizontal' ? 'nf-md-swap_horizontal' : 'nf-md-swap_vertical'}`}
                     onClick={() =>
@@ -79,7 +176,36 @@
                     }
                   ></button>
                 </>
-              )} 
+              )}
+
+              {output.network && (
+                <div className="network">
+                  {getNetworkIcon(output.network)}
+                  {output.network.defaultGateway?.ssid}
+                </div>
+              )}
+
+              {output.memory && (
+                <div className="memory">
+                  <i className="nf nf-fae-chip"></i>
+                  {Math.round(output.memory.usage)}%
+                </div>
+              )}
+
+              {output.cpu && (
+                <div className="cpu">
+                  <i className="nf nf-oct-cpu"></i>
+
+                  {/* Change the text color if the CPU usage is high. */}
+                  <span
+                    className={output.cpu.usage > 85 ? 'high-usage' : ''}
+                  >
+                    {Math.round(output.cpu.usage)}%
+                  </span>
+                </div>
+              )}
+
+              
             </div>
           </div>
         );
